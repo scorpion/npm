@@ -48,6 +48,9 @@ var Scorpion = (function () {
       var chain = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
 
       var requestedModule = this._registry[name];
+      if (!requestedModule) {
+        throw new Error('Dependency not found: ' + name);
+      }
       this._resolvedDependencies[name]++;
       chain.push(name);
       return Promise.all(requestedModule.dependencies.map(function (dependencyName) {

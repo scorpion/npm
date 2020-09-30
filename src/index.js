@@ -25,6 +25,9 @@ export default class Scorpion {
 
   _resolve(name, chain = []) {
     const requestedModule = this._registry[name];
+    if (!requestedModule) {
+      throw new Error('Dependency not found: ' + name);
+    }
     this._resolvedDependencies[name]++;
     chain.push(name);
     return Promise.all(requestedModule.dependencies.map((dependencyName) => {
