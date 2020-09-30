@@ -1,0 +1,14 @@
+{
+  "env": {
+    "mocha": true,
+    "amd": true
+  },
+  "globals": {
+    "expect": false,
+    "sinon": false
+  },
+  "rules": {
+    "max-nested-callbacks": 0,
+    "handle-callback-err": 0
+  }
+}

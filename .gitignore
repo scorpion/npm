@@ -1,0 +1,8 @@
+# Mac Files
+.DS_Store
+
+# Ignore Node Modules
+node_modules
+
+# Ingore dist folder
+dist
