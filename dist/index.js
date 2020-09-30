@@ -25,10 +25,6 @@ var Scorpion = (function () {
   _createClass(Scorpion, [{
     key: 'get',
     value: function get(name) {
-      if (!this._registry[name]) {
-        throw new Error('Module not found: ' + name);
-      }
-
       return this._resolve(name);
     }
   }, {
@@ -48,13 +44,29 @@ var Scorpion = (function () {
       var chain = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
 
       var requestedModule = this._registry[name];
+      if (!requestedModule) {
+        return new Promise(function (resolve, reject) {
+          if (chain.length === 0) {
+            return reject(new Error('Module not found: ' + name));
+          }
+          return reject(new Error('Dependency not found: ' + name));
+        });
+      }
       this._resolvedDependencies[name]++;
       chain.push(name);
       return Promise.all(requestedModule.dependencies.map(function (dependencyName) {
         var clonedChain = [].concat(_toConsumableArray(chain));
         if (clonedChain.indexOf(dependencyName) !== -1) {
-          var stringifiedChain = _this2._stringifyDependencyChain(clonedChain.concat([dependencyName]));
-          throw new Error('Circular Dependency detected: ' + stringifiedChain);
+          var _ret = (function () {
+            var stringifiedChain = _this2._stringifyDependencyChain(clonedChain.concat([dependencyName]));
+            return {
+              v: new Promise(function (resolve, reject) {
+                reject(new Error('Circular Dependency detected: ' + stringifiedChain));
+              })
+            };
+          })();
+
+          if (typeof _ret === 'object') return _ret.v;
         }
         return _this2._resolve(dependencyName, clonedChain);
       })).then(function (dependencies) {
