@@ -2,7 +2,7 @@ import {uuid} from './utils';
 
 const _instanceCache = {};
 
-export default class SimpleDi {
+export default class Scorpion {
 
   constructor() {
     this._registry = {};
@@ -99,8 +99,8 @@ export default class SimpleDi {
   }
 
   static withNewOnce(Constructor) {
-    const constructorFactory = SimpleDi.withNew(Constructor);
-    return SimpleDi.once(constructorFactory);
+    const constructorFactory = Scorpion.withNew(Constructor);
+    return Scorpion.once(constructorFactory);
   }
 
   static once(factory) {
