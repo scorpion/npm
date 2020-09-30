@@ -149,14 +149,16 @@ var Scorpion = (function () {
   }, {
     key: 'once',
     value: function once(factory) {
-      var _arguments = arguments;
-
       var id = (0, _utils.uuid)();
       return function () {
+        for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+          args[_key4] = arguments[_key4];
+        }
+
         if (!_instanceCache[id]) {
           var thisArg = {};
           _instanceCache[id] = {
-            returnValue: factory.apply(thisArg, _arguments)
+            returnValue: factory.apply(thisArg, args)
           };
         }
         return _instanceCache[id].returnValue;
