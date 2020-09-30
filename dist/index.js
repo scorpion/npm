@@ -80,11 +80,13 @@ var Scorpion = (function () {
 
       if (args.length === 2) {
         // name, factory
-        return this._register(args[0], args[1]);
+        this._register(args[0], args[1]);
+        return this;
       }
       if (args.length === 3) {
         // name, dependencies, factory
-        return this._register(args[0], args[2], args[1]);
+        this._register(args[0], args[2], args[1]);
+        return this;
       }
       throw new Error('Invalid number of arguments');
     }
@@ -97,11 +99,13 @@ var Scorpion = (function () {
 
       if (args.length === 2) {
         // name, factory
-        return this._register(args[0], args[1], undefined, true);
+        this._register(args[0], args[1], undefined, true);
+        return this;
       }
       if (args.length === 3) {
         // name, dependencies, factory
-        return this._register(args[0], args[2], args[1], true);
+        this._register(args[0], args[2], args[1], true);
+        return this;
       }
       throw new Error('Invalid number of arguments');
     }
@@ -149,14 +153,16 @@ var Scorpion = (function () {
   }, {
     key: 'once',
     value: function once(factory) {
-      var _arguments = arguments;
-
       var id = (0, _utils.uuid)();
       return function () {
+        for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+          args[_key4] = arguments[_key4];
+        }
+
         if (!_instanceCache[id]) {
           var thisArg = {};
           _instanceCache[id] = {
-            returnValue: factory.apply(thisArg, _arguments)
+            returnValue: factory.apply(thisArg, args)
           };
         }
         return _instanceCache[id].returnValue;

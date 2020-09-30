@@ -23,6 +23,9 @@ describe('Scorpion', function() {
         di.register('foo');
       }).toThrow();
     });
+    it('returns the scorpion instance', function() {
+      expect(di.register('foo', {})).toBe(di);
+    });
   });
 
   describe('forceRegister', function() {
@@ -31,6 +34,9 @@ describe('Scorpion', function() {
       expect(function() {
         di.forceRegister('foo', {});
       }).not.toThrow();
+    });
+    it('returns the scorpion instance', function() {
+      expect(di.forceRegister('foo', {})).toBe(di);
     });
   });
 
@@ -76,29 +82,27 @@ describe('Scorpion', function() {
       });
     });
 
-    it('retrieves a module', function(done) {
-      di.get('depA').then(function(retrievedObj) {
+    it('retrieves a module', function() {
+      return di.get('depA').then(function(retrievedObj) {
         expect(retrievedObj).toBe(depA);
-        done();
       });
     });
 
-    it('retrieves an async module', function(done) {
-      di.get('depB').then(function(retrievedObj) {
+    it('retrieves an async module', function() {
+      return di.get('depB').then(function(retrievedObj) {
         expect(retrievedObj).toBe(depB);
-        done();
       });
     });
 
-    it('retrieves an async module and resolves its dependencies', function(done) {
+    it('retrieves an async module and resolves its dependencies', function() {
       di.register('depC', ['depB'], function(dependencyB) {
         return new Promise(function(resolve) {
           resolve([depC, dependencyB]);
         });
       });
-      di.get('depC').then(function(arr) {
+      return di.get('depC').then(function(arr) {
         expect(arr).toEqual([depC, depB]);
-      }).then(done, done);
+      });
     });
 
     it('throws when trying to resolve a direct cicular dependency', function() {
@@ -160,32 +164,30 @@ describe('Scorpion', function() {
   });
 
   describe('Scorpion.withNew', function() {
-    it('initializes a Constructor with new', function(done) {
+    it('initializes a Constructor with new', function() {
       class Foo {
         bar() {}
       }
 
       di.register('Foo', Scorpion.withNew(Foo));
 
-      di.get('Foo').then(function(foo) {
+      return di.get('Foo').then(function(foo) {
         expect(foo instanceof Foo);
         expect(foo.bar).not.toBe(undefined);
-        done();
       });
     });
   });
 
   describe('Scorpion.withNewOnce', function() {
-    it('initializes a constructor with new once and then always returns the instance', function(done) {
+    it('initializes a constructor with new once and then always returns the instance', function() {
       function Foo() {
         this.foo = true;
       }
 
       di.register('Foo', Scorpion.withNewOnce(Foo));
 
-      Promise.all([di.get('Foo'), di.get('Foo')]).then((values) => {
+      return Promise.all([di.get('Foo'), di.get('Foo')]).then((values) => {
         expect(values[0]).toBe(values[1]);
-        done();
       });
     });
 
@@ -209,13 +211,21 @@ describe('Scorpion', function() {
   });
 
   describe('Scorpion.once', function() {
-    it('calls the factory once even when get is called multiple times', function(done) {
+    it('calls the factory once even when get is called multiple times', function() {
       const spy = sinon.spy();
       di.register('foo', Scorpion.once(spy));
 
-      Promise.all([di.get('foo'), di.get('foo')]).then(function() {
+      return Promise.all([di.get('foo'), di.get('foo')]).then(function() {
         expect(spy.calledOnce).toBe(true);
-        done();
+      });
+    });
+    it('forwards the defined dependencies to the passed factory', function() {
+      const spy = sinon.spy();
+      di.register('bar', Scorpion.always('bar'));
+      di.register('foo', ['bar'], Scorpion.once(spy));
+
+      return di.get('foo').then(function() {
+        expect(spy).toHaveBeenCalledWith('bar');
       });
     });
   });
