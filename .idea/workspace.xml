@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90d8ba04-9050-43ac-b510-29c92d20abe1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
-    </list>
+    <list default="true" id="90d8ba04-9050-43ac-b510-29c92d20abe1" name="Default" comment="" />
     <ignored path="psd-simpledi.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,7 +25,7 @@
         <entry file="file://$PROJECT_DIR$/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.8302425">
-              <caret line="118" column="3" selection-start-line="118" selection-start-column="3" selection-end-line="118" selection-end-column="3" />
+              <caret line="116" column="3" selection-start-line="116" selection-start-column="3" selection-end-line="116" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -59,18 +57,8 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="9" column="45" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
               <folding>
-                <marker date="1442495151000" expanded="true" signature="167:493" placeholder="{&quot;prepublish&quot;: &quot;npm run bundle&quot;...}" />
+                <marker date="1442497802000" expanded="true" signature="167:493" placeholder="{&quot;prepublish&quot;: &quot;npm run bundle&quot;...}" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="polyfill.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dist/polyfill.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="130" column="35" selection-start-line="130" selection-start-column="35" selection-end-line="130" selection-end-column="35" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -580,16 +568,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="45" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
           <folding>
-            <marker date="1442495151000" expanded="true" signature="167:493" placeholder="{&quot;prepublish&quot;: &quot;npm run bundle&quot;...}" />
+            <marker date="1442497802000" expanded="true" signature="167:493" placeholder="{&quot;prepublish&quot;: &quot;npm run bundle&quot;...}" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/polyfill.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="130" column="35" selection-start-line="130" selection-start-column="35" selection-end-line="130" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -665,7 +645,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
           <folding>
-            <marker date="1442495151000" expanded="true" signature="167:493" placeholder="{&quot;prepublish&quot;: &quot;npm run bundle&quot;...}" />
+            <marker date="1442497802000" expanded="true" signature="167:493" placeholder="{&quot;prepublish&quot;: &quot;npm run bundle&quot;...}" />
           </folding>
         </state>
       </provider>
@@ -761,16 +741,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="45" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
           <folding>
-            <marker date="1442495151000" expanded="true" signature="167:493" placeholder="{&quot;prepublish&quot;: &quot;npm run bundle&quot;...}" />
+            <marker date="1442497802000" expanded="true" signature="167:493" placeholder="{&quot;prepublish&quot;: &quot;npm run bundle&quot;...}" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/polyfill.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="130" column="35" selection-start-line="130" selection-start-column="35" selection-end-line="130" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -820,7 +792,7 @@
     <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8302425">
-          <caret line="118" column="3" selection-start-line="118" selection-start-column="3" selection-end-line="118" selection-end-column="3" />
+          <caret line="116" column="3" selection-start-line="116" selection-start-column="3" selection-end-line="116" selection-end-column="3" />
           <folding />
         </state>
       </provider>
