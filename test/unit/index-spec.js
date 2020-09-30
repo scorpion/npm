@@ -150,6 +150,16 @@ describe('Scorpion', function() {
         expect(e.toString()).toEqual('Error: Circular Dependency detected: Foo => Bar => Foo');
       }
     });
+    it('throws an explicit exception when a dependency does not exist', function() {
+      di.register('Foo', ['Bar'], () => {
+        return {};
+      });
+      try {
+        di.get('Foo');
+      } catch(e) {
+        expect(e.toString()).toEqual('Error: Dependency not found: Bar');
+      }
+    });
   });
 
   describe('getAll', function() {
