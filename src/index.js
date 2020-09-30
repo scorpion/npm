@@ -10,10 +10,6 @@ export default class Scorpion {
   }
 
   get(name) {
-    if (!this._registry[name]) {
-      throw new Error('Module not found: ' + name);
-    }
-
     return this._resolve(name);
   }
 
@@ -26,7 +22,12 @@ export default class Scorpion {
   _resolve(name, chain = []) {
     const requestedModule = this._registry[name];
     if (!requestedModule) {
-      throw new Error('Dependency not found: ' + name);
+      return new Promise((resolve, reject) => {
+        if (chain.length === 0) {
+          return reject(new Error('Module not found: ' + name));
+        }
+        return reject(new Error('Dependency not found: ' + name));
+      });
     }
     this._resolvedDependencies[name]++;
     chain.push(name);
@@ -36,7 +37,9 @@ export default class Scorpion {
         const stringifiedChain = this._stringifyDependencyChain(clonedChain.concat([
           dependencyName
         ]));
-        throw new Error('Circular Dependency detected: ' + stringifiedChain);
+        return new Promise(function(resolve, reject) {
+          reject(new Error('Circular Dependency detected: ' + stringifiedChain));
+        });
       }
       return this._resolve(dependencyName, clonedChain);
     })).then((dependencies) => {

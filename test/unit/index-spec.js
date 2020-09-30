@@ -113,11 +113,9 @@ describe('Scorpion', function() {
       di.register('Foo', ['Bar'], Scorpion.withNew(Foo));
       di.register('Bar', ['Foo'], Scorpion.withNew(Bar));
 
-      try {
-        di.get('Foo');
-      } catch(e) {
-        expect(e.toString()).toEqual('Error: Circular Dependency detected: Foo => Bar => Foo');
-      }
+      return di.get('Foo').catch(function(error) {
+        expect(error.toString()).toEqual('Error: Circular Dependency detected: Foo => Bar => Foo');
+      });
     });
 
     it('throws when trying to resolve a cicular dependency', function() {
@@ -129,11 +127,9 @@ describe('Scorpion', function() {
       di.register('Bar', ['Baz'], Scorpion.withNew(Bar));
       di.register('Baz', ['Foo'], Scorpion.withNew(Bar));
 
-      try {
-        di.get('Foo');
-      } catch(e) {
-        expect(e.toString()).toEqual('Error: Circular Dependency detected: Foo => Bar => Baz => Foo');
-      }
+      return di.get('Foo').catch(function(error) {
+        expect(error.toString()).toEqual('Error: Circular Dependency detected: Foo => Bar => Baz => Foo');
+      });
     });
 
     it('throws when a circular dependency is detected', function() {
@@ -144,11 +140,25 @@ describe('Scorpion', function() {
         return {};
       });
 
-      try {
-        di.get('Foo');
-      } catch(e) {
-        expect(e.toString()).toEqual('Error: Circular Dependency detected: Foo => Bar => Foo');
-      }
+      return di.get('Foo').catch(function(error) {
+        expect(error.toString()).toEqual('Error: Circular Dependency detected: Foo => Bar => Foo');
+      });
+    });
+
+    it('rejects when the module was not found', function() {
+      return di.get('foobar').catch(function(error) {
+        expect(error.toString()).toBe('Error: Module not found: foobar');
+      });
+    });
+
+    it('rejects with an explicit error when a dependency does not exist', function() {
+      di.register('Foo', ['Bar'], () => {
+        return {};
+      });
+
+      return di.get('Foo').catch(function(error) {
+        expect(error.toString()).toBe('Error: Dependency not found: Bar');
+      });
     });
     it('throws an explicit exception when a dependency does not exist', function() {
       di.register('Foo', ['Bar'], () => {
