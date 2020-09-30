@@ -160,6 +160,16 @@ describe('Scorpion', function() {
         expect(error.toString()).toBe('Error: Dependency not found: Bar');
       });
     });
+    it('throws an explicit exception when a dependency does not exist', function() {
+      di.register('Foo', ['Bar'], () => {
+        return {};
+      });
+      try {
+        di.get('Foo');
+      } catch(e) {
+        expect(e.toString()).toEqual('Error: Dependency not found: Bar');
+      }
+    });
   });
 
   describe('getAll', function() {
