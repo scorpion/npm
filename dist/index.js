@@ -14,15 +14,15 @@ var _utils = require('./utils');
 
 var _instanceCache = {};
 
-var SimpleDi = (function () {
-  function SimpleDi() {
-    _classCallCheck(this, SimpleDi);
+var Scorpion = (function () {
+  function Scorpion() {
+    _classCallCheck(this, Scorpion);
 
     this._registry = {};
     this._resolvedDependencies = {};
   }
 
-  _createClass(SimpleDi, [{
+  _createClass(Scorpion, [{
     key: 'get',
     value: function get(name) {
       if (!this._registry[name]) {
@@ -143,8 +143,8 @@ var SimpleDi = (function () {
   }, {
     key: 'withNewOnce',
     value: function withNewOnce(Constructor) {
-      var constructorFactory = SimpleDi.withNew(Constructor);
-      return SimpleDi.once(constructorFactory);
+      var constructorFactory = Scorpion.withNew(Constructor);
+      return Scorpion.once(constructorFactory);
     }
   }, {
     key: 'once',
@@ -164,8 +164,8 @@ var SimpleDi = (function () {
     }
   }]);
 
-  return SimpleDi;
+  return Scorpion;
 })();
 
-exports['default'] = SimpleDi;
+exports['default'] = Scorpion;
 module.exports = exports['default'];

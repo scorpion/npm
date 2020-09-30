@@ -1,5 +1,7 @@
 # Scorpion
 
+[![Build Status](https://travis-ci.org/p7s1digital/scorpion.svg?branch=master)](https://travis-ci.org/p7s1digital/scorpion)
+
 ## Requirements
 This package requires **ES5** and **promises**.
 
@@ -17,33 +19,8 @@ di.register('myConfig', Scorpion.always({
   test: true
 }));
 
-// register a class
-class MyClass {
-  constructor(myConfig) {
-  }
-}
-di.register('MyClass', ['myConfig'], Scorpion.withNew(MyClass));
-
-// register an async factory
-di.register('asyncModule', () => {
-  return new Promise((resolve) => {
-    // do some async tasks then resolve
-    resolve({
-      asyncModule: true
-    });
-  });
-});
-
-// get registered modules
+// get registered module
 di.get('myConfig').then((myConfig) => {
-  // do something
-});
-
-di.get('MyClass').then((myClassInstance) => {
-  // do something
-});
-
-di.get('asyncModule').then((asyncModule) => {
   // do something
 });
 ```
@@ -89,7 +66,31 @@ di.get('foo').then((foo) => {
 });
 ```
 
-## Built-in factory functions
+#### `di.getAll(arrayOfDependencyNames)`
+
+`getAll` returns a promise which will be resolved once all requested modules and dependencies are resolved.
+
+```javascript
+di.getAll(['foo', 'bar']).then((modules) => {
+  modules[0] // foo
+  modules[1] // bar
+});
+```
+
+### Other 
+
+#### `di.getResolvedDependencyCount()`
+
+Returns an object with numbers that state how often each dependency got resolved.
+
+```javascript
+
+// Example return value
+{ Foo: 1, Bar: 1, Baz: 1 }
+
+```
+
+## Built-in factory creator functions
 
 ### `Scorpion.always(objectOrFunction)`
 
@@ -124,6 +125,48 @@ Constructor | `function` | A constructor function
 When `di.get` is called the *first time* this factory function will initialize 
 the given constructor and for all upcoming calls it will always return the
 same instance. You can think of it as a singleton factory.
+
+## Examples
+
+```javascript
+import Scorpion from 'scorpion';
+const di = new Scorpion();
+
+// register an object
+di.register('myConfig', Scorpion.always({
+  test: true
+}));
+
+// register a class
+class MyClass {
+  constructor(myConfig) {
+  }
+}
+di.register('MyClass', ['myConfig'], Scorpion.withNew(MyClass));
+
+// register an async factory
+di.register('asyncModule', () => {
+  return new Promise((resolve) => {
+    // do some async tasks then resolve
+    resolve({
+      asyncModule: true
+    });
+  });
+});
+
+// get registered modules
+di.get('myConfig').then((myConfig) => {
+  // do something
+});
+
+di.get('MyClass').then((myClassInstance) => {
+  // do something
+});
+
+di.get('asyncModule').then((asyncModule) => {
+  // do something
+});
+```
 
 ## License
 

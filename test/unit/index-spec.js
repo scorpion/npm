@@ -1,9 +1,9 @@
-import SimpleDi from '../../src/index.js';
+import Scorpion from '../../src/index.js';
 
-describe('SimpleDi', function() {
+describe('Scorpion', function() {
   let di;
   beforeEach(function() {
-    di = new SimpleDi();
+    di = new Scorpion();
   });
 
   describe('register', function() {
@@ -106,8 +106,8 @@ describe('SimpleDi', function() {
 
       function Bar() {}
 
-      di.register('Foo', ['Bar'], SimpleDi.withNew(Foo));
-      di.register('Bar', ['Foo'], SimpleDi.withNew(Bar));
+      di.register('Foo', ['Bar'], Scorpion.withNew(Foo));
+      di.register('Bar', ['Foo'], Scorpion.withNew(Bar));
 
       try {
         di.get('Foo');
@@ -121,9 +121,9 @@ describe('SimpleDi', function() {
 
       function Bar() {}
 
-      di.register('Foo', ['Bar'], SimpleDi.withNew(Foo));
-      di.register('Bar', ['Baz'], SimpleDi.withNew(Bar));
-      di.register('Baz', ['Foo'], SimpleDi.withNew(Bar));
+      di.register('Foo', ['Bar'], Scorpion.withNew(Foo));
+      di.register('Bar', ['Baz'], Scorpion.withNew(Bar));
+      di.register('Baz', ['Foo'], Scorpion.withNew(Bar));
 
       try {
         di.get('Foo');
@@ -150,8 +150,8 @@ describe('SimpleDi', function() {
 
   describe('getAll', function() {
     it('retrieves multiple modules by passing an array', function() {
-      di.register('foo', SimpleDi.always({}));
-      di.register('bar', SimpleDi.always({}));
+      di.register('foo', Scorpion.always({}));
+      di.register('bar', Scorpion.always({}));
 
       di.getAll(['foo', 'bar']).then((modules) => {
         expect(modules.length).toBe(2);
@@ -159,13 +159,13 @@ describe('SimpleDi', function() {
     });
   });
 
-  describe('SimpleDi.withNew', function() {
+  describe('Scorpion.withNew', function() {
     it('initializes a Constructor with new', function(done) {
       class Foo {
         bar() {}
       }
 
-      di.register('Foo', SimpleDi.withNew(Foo));
+      di.register('Foo', Scorpion.withNew(Foo));
 
       di.get('Foo').then(function(foo) {
         expect(foo instanceof Foo);
@@ -175,13 +175,13 @@ describe('SimpleDi', function() {
     });
   });
 
-  describe('SimpleDi.withNewOnce', function() {
+  describe('Scorpion.withNewOnce', function() {
     it('initializes a constructor with new once and then always returns the instance', function(done) {
       function Foo() {
         this.foo = true;
       }
 
-      di.register('Foo', SimpleDi.withNewOnce(Foo));
+      di.register('Foo', Scorpion.withNewOnce(Foo));
 
       Promise.all([di.get('Foo'), di.get('Foo')]).then((values) => {
         expect(values[0]).toBe(values[1]);
@@ -199,8 +199,8 @@ describe('SimpleDi', function() {
         bar: true
       };
 
-      di.register('Foo', ['bar'], SimpleDi.withNewOnce(Foo));
-      di.register('bar', SimpleDi.always(bar));
+      di.register('Foo', ['bar'], Scorpion.withNewOnce(Foo));
+      di.register('bar', Scorpion.always(bar));
 
       di.get('Foo').then((foo) => {
         expect(foo.bar).toBe(bar);
@@ -208,10 +208,10 @@ describe('SimpleDi', function() {
     });
   });
 
-  describe('SimpleDi.once', function() {
+  describe('Scorpion.once', function() {
     it('calls the factory once even when get is called multiple times', function(done) {
       const spy = sinon.spy();
-      di.register('foo', SimpleDi.once(spy));
+      di.register('foo', Scorpion.once(spy));
 
       Promise.all([di.get('foo'), di.get('foo')]).then(function() {
         expect(spy.calledOnce).toBe(true);
