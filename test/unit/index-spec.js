@@ -23,6 +23,9 @@ describe('Scorpion', function() {
         di.register('foo');
       }).toThrow();
     });
+    it('returns the scorpion instance', function() {
+      expect(di.register('foo', {})).toBe(di);
+    });
   });
 
   describe('forceRegister', function() {
@@ -31,6 +34,9 @@ describe('Scorpion', function() {
       expect(function() {
         di.forceRegister('foo', {});
       }).not.toThrow();
+    });
+    it('returns the scorpion instance', function() {
+      expect(di.forceRegister('foo', {})).toBe(di);
     });
   });
 
@@ -218,7 +224,7 @@ describe('Scorpion', function() {
       di.register('bar', Scorpion.always('bar'));
       di.register('foo', ['bar'], Scorpion.once(spy));
 
-      return di.get('foo').then(function(bar) {
+      return di.get('foo').then(function() {
         expect(spy).toHaveBeenCalledWith('bar');
       });
     });
