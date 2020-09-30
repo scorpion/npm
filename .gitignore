@@ -3,6 +3,3 @@
 
 # Ignore Node Modules
 node_modules
-
-# Ingore dist folder
-dist

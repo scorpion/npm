@@ -47,5 +47,5 @@
     "prepublish": "npm run bundle",
     "test": "mocha --reporter dot --recursive -r setup-referee-sinon/globals test/unit --compilers js:babel/register"
   },
-  "version": "1.0.0"
+  "version": "1.0.1"
 }
